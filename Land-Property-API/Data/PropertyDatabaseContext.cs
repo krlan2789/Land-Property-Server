@@ -13,5 +13,4 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
     public DbSet<PropertyType> PropertyTypes => Set<PropertyType>();
 
     public DbSet<AdvertisementType> AdvertisementTypes => Set<AdvertisementType>();
-
 }
