@@ -41,4 +41,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Migrate the database
+if (app.Environment.IsDevelopment())
+{
+    await app.MigrateDbAsync();
+}
+
 app.Run();
