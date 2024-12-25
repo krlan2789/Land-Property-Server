@@ -1,4 +1,4 @@
-using Land_Property_API.Data;
+using Land_Property.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -34,7 +34,6 @@ if (app.Environment.IsDevelopment())
             ;
     });
 }
-
 
 app.UseHttpsRedirection();
 

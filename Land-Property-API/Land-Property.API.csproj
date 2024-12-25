@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Land_Property_API</RootNamespace>
+    <RootNamespace>Land_Property.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

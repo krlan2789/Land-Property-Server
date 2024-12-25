@@ -1,8 +1,7 @@
-using System;
-using Land_Property_API.Entities;
+using Land_Property.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Land_Property_API.Data;
+namespace Land_Property.API.Data;
 
 public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> options) : DbContext(options)
 {
@@ -13,4 +12,8 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
     public DbSet<PropertyType> PropertyTypes => Set<PropertyType>();
 
     public DbSet<AdvertisementType> AdvertisementTypes => Set<AdvertisementType>();
+
+    public DbSet<UserSessionLog> UserSessionLogs => Set<UserSessionLog>();
+
+    public DbSet<PropertyViewLog> PropertyViewLogs => Set<PropertyViewLog>();
 }

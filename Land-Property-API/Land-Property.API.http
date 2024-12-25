@@ -1,0 +1,7 @@
+@Land_Property_API_HostAddress = https://localhost:7092/api
+
+### Get All Land Properties
+GET {{Land_Property_API_HostAddress}}/user
+Accept: application/json
+
+###
