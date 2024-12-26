@@ -25,7 +25,7 @@ ASP.NET Project - REST API for Land Property Project
 | PK  | **Id**       | int      | Auto-increament                   |
 |     | Name         | string   | Length(255)                       |
 |     | Email        | string   | Length(128), unique               |
-|     | PasswordHash | string   | Length(64)                        |
+|     | PasswordHash | string   | Length(255)                       |
 |     | PhoneNumber  | string   | Length(32), unique                |
 |     | Address      | string   | nullable                          |
 |     | CreatedAt    | DateTime | Length(20), 'yyyy-MM-dd HH:mm:ss' |
@@ -47,6 +47,7 @@ ASP.NET Project - REST API for Land Property Project
 |     | Name        | Type   |                                   |
 | --- | ----------- | ------ | --------------------------------- |
 | PK  | **Id**      | int    | Auto-increament                   |
+|     | Code        | string | Length(64), unique                |
 |     | Name        | string | Length(64)                        |
 |     | Description | string | nullable                          |
 |     | CreatedAt   | string | Length(20), 'yyyy-MM-dd HH:mm:ss' |
@@ -57,6 +58,7 @@ ASP.NET Project - REST API for Land Property Project
 |     | Name        | Type   |                                   |
 | --- | ----------- | ------ | --------------------------------- |
 | PK  | **Id**      | int    | Auto-increament                   |
+|     | Code        | string | Length(64), unique                |
 |     | Name        | string | Length(64)                        |
 |     | Description | string | nullable                          |
 |     | CreatedAt   | string | Length(20), 'yyyy-MM-dd HH:mm:ss' |
