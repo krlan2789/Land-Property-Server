@@ -6,7 +6,7 @@ namespace Land_Property.API.Mapping;
 
 public static class PropertyMapping
 {
-    public static Property ToEntity(this CreatePropertyDto dto)
+    public static Property ToEntity(this CreatePropertyDto dto, User user, PropertyType buildingType, AdvertisementType advertisementType)
     {
         string slug = SlugHelper.Create(dto.Title);
         return new Property
@@ -16,21 +16,21 @@ public static class PropertyMapping
             Description = dto.Description,
             Address = dto.Address,
             Price = dto.Price,
-            LandArea = dto.LandArea,
+            LandArea = new(dto.LandAreaX, dto.LandAreaY),
             Bedroom = dto.Bedroom,
             Bathroom = dto.Bathroom,
             BuildingArea = dto.BuildingArea,
             Floor = dto.Floor,
             Images = dto.Images,
-            UserId = dto.UserId,
-            BuildingTypeId = dto.BuildingTypeId,
-            AdvertisementTypeId = dto.AdvertisementTypeId,
+            User = user,
+            BuildingType = buildingType,
+            AdvertisementType = advertisementType,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now
         };
     }
 
-    public static Property ToEntity(this UpdatePropertyDto dto, string slug)
+    public static Property ToEntity(this UpdatePropertyDto dto, string slug, User user, PropertyType buildingType, AdvertisementType advertisementType)
     {
         return new Property
         {
@@ -39,14 +39,15 @@ public static class PropertyMapping
             Description = dto.Description,
             Address = dto.Address,
             Price = dto.Price,
-            LandArea = dto.LandArea,
+            LandArea = new(dto.LandAreaX, dto.LandAreaY),
             Bedroom = dto.Bedroom,
             Bathroom = dto.Bathroom,
             BuildingArea = dto.BuildingArea,
             Floor = dto.Floor,
             Images = dto.Images,
-            BuildingTypeId = dto.BuildingTypeId,
-            AdvertisementTypeId = dto.AdvertisementTypeId,
+            User = user,
+            BuildingType = buildingType,
+            AdvertisementType = advertisementType,
             UpdatedAt = DateTime.Now
         };
     }

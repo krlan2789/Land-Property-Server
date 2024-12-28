@@ -23,13 +23,14 @@ namespace Land_Property.API.Controllers
             _tokenService = tokenService;
         }
 
+        // [ValidateAntiForgeryToken]
         [HttpPost("login", Name = nameof(PostLogin))]
         public async Task<IResult> PostLogin(LoginUserDto dto)
         {
             User? currentUser = await dbContext.Users.Where(user => user.Email == dto.Email).FirstOrDefaultAsync();
             if (currentUser != null && currentUser.VerifyPassword(dto.Password))
             {
-                var token = _tokenService.GenerateToken("" + currentUser.Id, TimeSpan.FromMinutes(60));
+                var token = _tokenService.GenerateToken("" + currentUser.Id, TimeSpan.FromDays(30));
                 return Results.Ok(new ResponseData<ResponseUserDto>("Login Successfully", token));
             }
             else
@@ -38,6 +39,7 @@ namespace Land_Property.API.Controllers
             }
         }
 
+        // [ValidateAntiForgeryToken]
         [HttpPost("register", Name = nameof(PostRegister))]
         public async Task<IResult> PostRegister([FromBody] RegisterUserDto userDto)
         {

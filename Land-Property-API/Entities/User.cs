@@ -22,6 +22,7 @@ public class User
     public required string PhoneNumber { get; set; }
 
     public string? Address { get; set; }
+    public ICollection<Property>? Properties { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

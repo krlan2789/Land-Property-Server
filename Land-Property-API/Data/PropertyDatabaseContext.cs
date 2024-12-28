@@ -28,10 +28,40 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
             v => JsonConvert.DeserializeObject<Vector2>(v)
         );
 
+        // Users Table
+        modelBuilder.Entity<User>()
+            .HasIndex(e => e.Email)
+            .IsUnique();
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Properties)
+            .WithOne(p => p.User)
+            .HasForeignKey(p => p.UserId);
+        modelBuilder.Entity<User>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<User>()
+            .Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("GETDATE()");
+
         // Properties Table
         modelBuilder.Entity<Property>()
             .HasIndex(e => e.Slug)
             .IsUnique();
+        modelBuilder.Entity<Property>()
+            .HasOne(p => p.User)
+            .WithMany(u => u.Properties)
+            .HasForeignKey(p => p.UserId);
+        modelBuilder.Entity<Property>()
+            .HasOne(p => p.BuildingType)
+            .WithMany(pt => pt.Properties)
+            .HasForeignKey(p => p.BuildingTypeId);
+        modelBuilder.Entity<Property>()
+            .HasOne(p => p.AdvertisementType)
+            .WithMany(at => at.Properties)
+            .HasForeignKey(p => p.AdvertisementTypeId);
+        modelBuilder.Entity<Property>()
+            .Property(e => e.BuildingArea)
+            .HasConversion<double>();
         modelBuilder.Entity<Property>()
             .Property(e => e.LandArea)
             .HasConversion(converter);
@@ -42,21 +72,14 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
             .Property(e => e.UpdatedAt)
             .HasDefaultValueSql("GETDATE()");
 
-        // Users Table
-        modelBuilder.Entity<User>()
-            .HasIndex(e => e.Email)
-            .IsUnique();
-        modelBuilder.Entity<User>()
-            .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("GETDATE()");
-        modelBuilder.Entity<User>()
-            .Property(e => e.UpdatedAt)
-            .HasDefaultValueSql("GETDATE()");
-
         // PropertyType Table
         modelBuilder.Entity<PropertyType>()
             .HasIndex(e => e.Slug)
             .IsUnique();
+        modelBuilder.Entity<PropertyType>()
+            .HasMany(pt => pt.Properties)
+            .WithOne(p => p.BuildingType)
+            .HasForeignKey(p => p.BuildingTypeId);
         modelBuilder.Entity<PropertyType>()
             .Property(e => e.CreatedAt)
             .HasDefaultValueSql("GETDATE()");
@@ -75,6 +98,10 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
         modelBuilder.Entity<AdvertisementType>()
             .HasIndex(e => e.Slug)
             .IsUnique();
+        modelBuilder.Entity<AdvertisementType>()
+            .HasMany(at => at.Properties)
+            .WithOne(p => p.AdvertisementType)
+            .HasForeignKey(p => p.AdvertisementTypeId);
         modelBuilder.Entity<AdvertisementType>()
             .Property(e => e.CreatedAt)
             .HasDefaultValueSql("GETDATE()");

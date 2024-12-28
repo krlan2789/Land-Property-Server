@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Land_Property.API.Entities;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Land_Property.API.Services;
@@ -53,5 +54,12 @@ public class TokenService
             ValidateLifetime = true
         };
         return tokenHandler.ValidateToken(token, validationParameters, out _);
+    }
+
+    public int GetUserIdFromToken(HttpContext httpContext)
+    {
+        string token = "" + httpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+        var claim = GetPrincipalFromToken(token).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+        return claim == null ? -1 : int.Parse(claim);
     }
 }

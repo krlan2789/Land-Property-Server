@@ -40,11 +40,8 @@ public class UserController : ControllerBase
     {
         try
         {
-            string token = "" + HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
-            var claim = _tokenService.GetPrincipalFromToken(token).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-            var userClaim = User.FindFirst(claim => claim.Type == ClaimTypes.NameIdentifier);
-            if (userClaim == null) return Results.Unauthorized();
-            var userId = int.Parse(userClaim.Value);
+            var userId = _tokenService.GetUserIdFromToken(HttpContext);
+            if (userId < 1) return Results.Unauthorized();
             Property[]? existingProperty = await dbContext.Properties.Where(property => property.UserId == userId).ToArrayAsync();
             if (existingProperty is null) return Results.NotFound();
             return Results.Ok(new ResponseData<ResponsePropertyDto[]>("Success", existingProperty.ToResponseDto()));

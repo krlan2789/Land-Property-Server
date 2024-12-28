@@ -1,5 +1,6 @@
 using System.Text;
 using Land_Property.API.Data;
+// using Land_Property.API.Middleware;
 using Land_Property.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -61,13 +62,20 @@ builder.Services.AddSingleton(new TokenService(secretKey, tokenIssuer, tokenAudi
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+// builder.Services
+//     .AddAntiforgery(options =>
+//     {
+//         options.HeaderName = "X-XSRF-TOKEN";
+//     });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// app.UseMiddleware<AntiForgeryMiddleware>();
 app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

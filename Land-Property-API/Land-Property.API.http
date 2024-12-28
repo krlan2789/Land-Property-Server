@@ -54,7 +54,7 @@ Accept: application/json
 ### Get all properties by user
 GET {{ Land_Property_API_HostAddress }}/user/properties
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiYTRhYTYxNmYtZGEyMy00MGQxLTk5NjUtZDE3MjllNzQyNTJmIiwiZXhwIjoxNzM1MzcxNjA4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.Hww8HFDlFiCDROmDaltxRdFmFAcGpA4ZtKLCaDlLOXY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwianRpIjoiYzRhNjc3OGQtZWQ2Zi00ODdmLTgwNGEtYjY4MmE0YTkxYjMwIiwiZXhwIjoxNzM3OTg5OTAzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.d5CzA1ZafznlvfJczkYZB9kYHqwfsvN-pqUYcyk0qx0
 
 ### Get all properties
 GET {{ Land_Property_API_HostAddress }}/property/search
@@ -68,24 +68,23 @@ Accept: application/json
 POST {{ Land_Property_API_HostAddress }}/property
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiYTRhYTYxNmYtZGEyMy00MGQxLTk5NjUtZDE3MjllNzQyNTJmIiwiZXhwIjoxNzM1MzcxNjA4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.Hww8HFDlFiCDROmDaltxRdFmFAcGpA4ZtKLCaDlLOXY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwianRpIjoiYzRhNjc3OGQtZWQ2Zi00ODdmLTgwNGEtYjY4MmE0YTkxYjMwIiwiZXhwIjoxNzM3OTg5OTAzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.d5CzA1ZafznlvfJczkYZB9kYHqwfsvN-pqUYcyk0qx0
 
 {
-  "title": "Rumahnya Tester 1",
-  "address": "Jalan Rumah Tester 1 No. 1",
-  "buildingArea": 1,
-  "landArea": { "x": 0, "y": 0 },
-  "bedroom": 1,
-  "bathroom": 1,
-  "floor": 1,
-  "price": 1,
+  "title": "Rumahnya Tester ",
+  "address": "Jalan Rumah Tester 2 No. 2",
+  "buildingArea": 80,
+  "landAreaX": 6,
+  "landAreaY": 10,
+  "bedroom": 2,
+  "bathroom": 2,
+  "floor": 2,
+  "price": 1250000000,
   "description": "",
-  "images": [
-    ""
-  ],
-  "userId": 1,
-  "buildingTypeId": 1,
-  "advertisementTypeId": 1
+  "images": [],
+  "userId": 2,
+  "buildingTypeId": 3,
+  "advertisementTypeId": 2
 }
 
 ### Update property by id

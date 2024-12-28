@@ -4,6 +4,7 @@ using Land_Property.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Property.API.Migrations
 {
     [DbContext(typeof(PropertyDatabaseContext))]
-    partial class PropertyDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241228113903_AddEntityRelation")]
+    partial class AddEntityRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,26 +67,26 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(7410),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(7702),
                             Name = "Rent",
                             Slug = "rent",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(7632)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(7932)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8160),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(8500),
                             Name = "Sell",
                             Slug = "sell",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8161)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(8501)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8162),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(8503),
                             Name = "Credit",
                             Slug = "credit",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8163)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(8503)
                         });
                 });
 
@@ -209,42 +212,42 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 333, DateTimeKind.Local).AddTicks(8052),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 545, DateTimeKind.Local).AddTicks(7974),
                             Name = "House",
                             Slug = "house",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9048)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 546, DateTimeKind.Local).AddTicks(9610)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9692),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(279),
                             Name = "Apartment",
                             Slug = "apartment",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9693)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(281)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9696),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(282),
                             Name = "Guesthouse",
                             Slug = "guesthouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9696)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(282)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9698),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(283),
                             Name = "Warehouse",
                             Slug = "warehouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9698)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(284)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9699),
+                            CreatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(285),
                             Name = "Commercial",
                             Slug = "commercial",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9700)
+                            UpdatedAt = new DateTime(2024, 12, 28, 18, 39, 1, 547, DateTimeKind.Local).AddTicks(285)
                         });
                 });
 
