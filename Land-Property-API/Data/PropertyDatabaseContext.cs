@@ -30,13 +30,72 @@ public class PropertyDatabaseContext(DbContextOptions<PropertyDatabaseContext> o
 
         // Properties Table
         modelBuilder.Entity<Property>()
+            .HasIndex(e => e.Slug)
+            .IsUnique();
+        modelBuilder.Entity<Property>()
             .Property(e => e.LandArea)
             .HasConversion(converter);
+        modelBuilder.Entity<Property>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<Property>()
+            .Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("GETDATE()");
 
         // Users Table
         modelBuilder.Entity<User>()
             .HasIndex(e => e.Email)
             .IsUnique();
+        modelBuilder.Entity<User>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<User>()
+            .Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("GETDATE()");
+
+        // PropertyType Table
+        modelBuilder.Entity<PropertyType>()
+            .HasIndex(e => e.Slug)
+            .IsUnique();
+        modelBuilder.Entity<PropertyType>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<PropertyType>()
+            .Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<PropertyType>().HasData(
+            new PropertyType { Id = 1, Name = "House", Slug = "house" },
+            new PropertyType { Id = 2, Name = "Apartment", Slug = "apartment" },
+            new PropertyType { Id = 3, Name = "Guesthouse", Slug = "guesthouse" },
+            new PropertyType { Id = 4, Name = "Warehouse", Slug = "warehouse" },
+            new PropertyType { Id = 5, Name = "Commercial", Slug = "commercial" }
+        );
+
+        // AdvertisementType Table
+        modelBuilder.Entity<AdvertisementType>()
+            .HasIndex(e => e.Slug)
+            .IsUnique();
+        modelBuilder.Entity<AdvertisementType>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<AdvertisementType>()
+            .Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("GETDATE()");
+        modelBuilder.Entity<AdvertisementType>().HasData(
+            new AdvertisementType { Id = 1, Name = "Rent", Slug = "rent" },
+            new AdvertisementType { Id = 2, Name = "Sell", Slug = "sell" },
+            new AdvertisementType { Id = 3, Name = "Credit", Slug = "credit" }
+        );
+
+        // UserSessionLog Table
+        modelBuilder.Entity<UserSessionLog>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+
+        // PropertyViewLog Table
+        modelBuilder.Entity<PropertyViewLog>()
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

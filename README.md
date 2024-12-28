@@ -47,7 +47,7 @@ ASP.NET Project - REST API for Land Property Project
 |     | Name        | Type   |                                   |
 | --- | ----------- | ------ | --------------------------------- |
 | PK  | **Id**      | int    | Auto-increament                   |
-|     | Code        | string | Length(64), unique                |
+|     | Slug        | string | Length(64), unique                |
 |     | Name        | string | Length(64)                        |
 |     | Description | string | nullable                          |
 |     | CreatedAt   | string | Length(20), 'yyyy-MM-dd HH:mm:ss' |
@@ -58,7 +58,7 @@ ASP.NET Project - REST API for Land Property Project
 |     | Name        | Type   |                                   |
 | --- | ----------- | ------ | --------------------------------- |
 | PK  | **Id**      | int    | Auto-increament                   |
-|     | Code        | string | Length(64), unique                |
+|     | Slug        | string | Length(64), unique                |
 |     | Name        | string | Length(64)                        |
 |     | Description | string | nullable                          |
 |     | CreatedAt   | string | Length(20), 'yyyy-MM-dd HH:mm:ss' |
@@ -69,6 +69,7 @@ ASP.NET Project - REST API for Land Property Project
 |     | Name                    | Type     |                                   |
 | --- | ----------------------- | -------- | --------------------------------- |
 | PK  | **Id**                  | int      | Auto-increament                   |
+|     | Slug                    | string   | Length(512), unique               |
 |     | Title                   | string   | Length(255)                       |
 |     | Address                 | string   |                                   |
 |     | BuildingArea            | float    |                                   |

@@ -4,6 +4,7 @@ using Land_Property.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Property.API.Migrations
 {
     [DbContext(typeof(PropertyDatabaseContext))]
-    partial class PropertyDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241227210118_UpdateMigrationsDefaultValue")]
+    partial class UpdateMigrationsDefaultValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +33,11 @@ namespace Land_Property.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -43,11 +51,6 @@ namespace Land_Property.API.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -55,7 +58,7 @@ namespace Land_Property.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Slug")
+                    b.HasIndex("Code")
                         .IsUnique();
 
                     b.ToTable("AdvertisementTypes");
@@ -64,26 +67,26 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(3174),
+                            Code = "rent",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(3541),
                             Name = "Rent",
-                            Slug = "rent",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(3437)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(3766)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4177),
+                            Code = "sell",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(4326),
                             Name = "Sell",
-                            Slug = "sell",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4179)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(4328)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4181),
+                            Code = "credit",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(4329),
                             Name = "Credit",
-                            Slug = "credit",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4182)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 205, DateTimeKind.Local).AddTicks(4330)
                         });
                 });
 
@@ -135,11 +138,6 @@ namespace Land_Property.API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(20,0)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -159,9 +157,6 @@ namespace Land_Property.API.Migrations
 
                     b.HasIndex("BuildingTypeId");
 
-                    b.HasIndex("Slug")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Properties");
@@ -174,6 +169,11 @@ namespace Land_Property.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -188,11 +188,6 @@ namespace Land_Property.API.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -200,7 +195,7 @@ namespace Land_Property.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Slug")
+                    b.HasIndex("Code")
                         .IsUnique();
 
                     b.ToTable("PropertyTypes");
@@ -209,42 +204,42 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 77, DateTimeKind.Local).AddTicks(3536),
+                            Code = "house",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 203, DateTimeKind.Local).AddTicks(6580),
                             Name = "House",
-                            Slug = "house",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(5625)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7059)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6337),
+                            Code = "apartment",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7705),
                             Name = "Apartment",
-                            Slug = "apartment",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6340)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7707)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6341),
+                            Code = "guesthouse",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7708),
                             Name = "Guesthouse",
-                            Slug = "guesthouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6342)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7708)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6343),
+                            Code = "warehouse",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7709),
                             Name = "Warehouse",
-                            Slug = "warehouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6343)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7710)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6344),
+                            Code = "commercial",
+                            CreatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7711),
                             Name = "Commercial",
-                            Slug = "commercial",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6345)
+                            UpdatedAt = new DateTime(2024, 12, 28, 4, 1, 18, 204, DateTimeKind.Local).AddTicks(7711)
                         });
                 });
 

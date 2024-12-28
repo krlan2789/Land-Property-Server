@@ -1,7 +1,118 @@
-@Land_Property_API_HostAddress = https://localhost:7092/api
+@Land_Property_API_HostAddress  = http://localhost:5011/api
+@UserEmail = tester1@mail.com
+@PropertySlug = property-slug
 
-### Get All Land Properties
-GET {{Land_Property_API_HostAddress}}/user
+### Register new user
+POST {{ Land_Property_API_HostAddress }}/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Tester 1",
+  "email": "tester1@mail.com",
+  "password": "12345678",
+  "phoneNumber": "081234567890",
+  "address": "Jalan Rumah Tester 1 No. 1"
+}
+
+### Register new user 2
+POST {{ Land_Property_API_HostAddress }}/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Tester 2",
+  "email": "tester2@mail.com",
+  "password": "12345678",
+  "phoneNumber": "081234567891",
+  "address": "Jalan Rumah Tester 2 No. 2"
+}
+
+### Login first for create token for access other API
+POST {{ Land_Property_API_HostAddress }}/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "tester2@mail.com",
+  "password": "12345678"
+}
+
+### Get user by email
+GET {{ Land_Property_API_HostAddress }}/user/{{ UserEmail }}
+Accept: application/json
+Authorization: Bearer _TOKEN_FROM_LOGIN_HERE_
+
+### Get all property types
+GET {{ Land_Property_API_HostAddress }}/propertytype
 Accept: application/json
 
-###
+### Get all advertisement types
+GET {{ Land_Property_API_HostAddress }}/advertisementtype
+Accept: application/json
+
+### Get all properties by user
+GET {{ Land_Property_API_HostAddress }}/user/properties
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiYTRhYTYxNmYtZGEyMy00MGQxLTk5NjUtZDE3MjllNzQyNTJmIiwiZXhwIjoxNzM1MzcxNjA4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.Hww8HFDlFiCDROmDaltxRdFmFAcGpA4ZtKLCaDlLOXY
+
+### Get all properties
+GET {{ Land_Property_API_HostAddress }}/property/search
+Accept: application/json
+
+### Get property by id
+GET {{ Land_Property_API_HostAddress }}/property/{{ PropertySlug }}
+Accept: application/json
+
+### Create new property
+POST {{ Land_Property_API_HostAddress }}/property
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiYTRhYTYxNmYtZGEyMy00MGQxLTk5NjUtZDE3MjllNzQyNTJmIiwiZXhwIjoxNzM1MzcxNjA4LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMTEifQ.Hww8HFDlFiCDROmDaltxRdFmFAcGpA4ZtKLCaDlLOXY
+
+{
+  "title": "Rumahnya Tester 1",
+  "address": "Jalan Rumah Tester 1 No. 1",
+  "buildingArea": 1,
+  "landArea": { "x": 0, "y": 0 },
+  "bedroom": 1,
+  "bathroom": 1,
+  "floor": 1,
+  "price": 1,
+  "description": "",
+  "images": [
+    ""
+  ],
+  "userId": 1,
+  "buildingTypeId": 1,
+  "advertisementTypeId": 1
+}
+
+### Update property by id
+PUT {{ Land_Property_API_HostAddress }}/property/{{ PropertySlug }}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer _TOKEN_FROM_LOGIN_HERE_
+
+{
+  "title": "",
+  "address": "",
+  "buildingArea": 1,
+  "landArea": { "x": 0, "y": 0 },
+  "bedroom": 1,
+  "bathroom": 1,
+  "floor": 1,
+  "price": 1,
+  "description": "",
+  "images": [
+    ""
+  ],
+  "userId": 1,
+  "buildingTypeId": 1,
+  "advertisementTypeId": 1
+}
+
+### Delete property by id
+DELETE {{ Land_Property_API_HostAddress }}/property/{{ PropertySlug }}
+Accept: application/json
+Authorization: Bearer _TOKEN_FROM_LOGIN_HERE_

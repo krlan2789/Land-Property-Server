@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +6,7 @@ namespace Land_Property.API.Entities;
 [Index(nameof(Email), IsUnique = true)]
 public class User
 {
+    [Key]
     public int Id { get; set; }
 
     [Required, MaxLength(255)]
@@ -25,4 +25,10 @@ public class User
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
+    public User()
+    {
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+    }
 }

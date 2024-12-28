@@ -1,15 +1,21 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 
 namespace Land_Property.API.Entities;
 
+[Index(nameof(Slug), IsUnique = true)]
 public class Property
 {
+    [Key]
     public int Id { get; set; }
 
     [Required, MaxLength(255)]
     public required string Title { get; set; }
+
+    [Required, MaxLength(512)]
+    public required string Slug { get; set; }
 
     [Required]
     public required string Address { get; set; }
@@ -40,8 +46,14 @@ public class Property
     public PropertyType? BuildingType { get; set; }
 
     public int AdvertisementTypeId { get; set; }
-    public AdvertisementType? AdsType { get; set; }
+    public AdvertisementType? AdvertisementType { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
+    public Property()
+    {
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+    }
 }

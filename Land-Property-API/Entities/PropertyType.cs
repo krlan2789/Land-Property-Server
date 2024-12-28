@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Land_Property.API.Entities;
 
-[Index(nameof(Code), IsUnique = true)]
+[Index(nameof(Slug), IsUnique = true)]
 public class PropertyType
 {
+    [Key]
     public int Id { get; set; }
 
     [Required, MaxLength(64)]
-    public required string Code { get; set; }
+    public required string Slug { get; set; }
 
     [Required, MaxLength(64)]
     public required string Name { get; set; }
@@ -18,4 +19,10 @@ public class PropertyType
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
+    public PropertyType()
+    {
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+    }
 }

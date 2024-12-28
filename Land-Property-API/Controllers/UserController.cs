@@ -1,7 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Land_Property.API.Data;
 using Land_Property.API.Dtos;
 using Land_Property.API.Entities;
 using Land_Property.API.Mapping;
+using Land_Property.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,42 +13,45 @@ namespace Land_Property.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(ILogger<UserController> logger, PropertyDatabaseContext context) : ControllerBase
+public class UserController : ControllerBase
 {
-    private readonly ILogger<UserController> _logger = logger;
-    private readonly PropertyDatabaseContext dbContext = context;
+    private readonly ILogger<UserController> _logger;
+    private readonly PropertyDatabaseContext dbContext;
+    private readonly TokenService _tokenService;
 
-    [HttpGet("{Id}", Name = nameof(GetUserById))]
-    public async Task<IResult> GetUserById(int Id)
+    public UserController(ILogger<UserController> logger, TokenService tokenService, PropertyDatabaseContext context)
     {
-        User? currentUser = await dbContext.Users.FindAsync(Id);
-        return currentUser is null ? Results.NotFound() : Results.Ok(currentUser.ToResponseDto());
+        _logger = logger;
+        dbContext = context;
+        _tokenService = tokenService;
     }
 
-    // [HttpGet("m/{Email}")]
-    // public async Task<IResult> GetUserByEmail(string Email)
-    // {
-    //     User? currentUser = await dbContext.Users.Where(user => user.Email == Email).FirstAsync();
-    //     return currentUser is null ? Results.NotFound() : Results.Ok(currentUser.ToResponseDto());
-    // }
-
-    [HttpPost("register", Name = nameof(PostRegister))]
-    public async Task<IResult> PostRegister([FromBody] RegisterUserDto userDto)
+    [Authorize]
+    [HttpGet("{Email}")]
+    public async Task<IResult> GetUserByEmail(string Email)
     {
-        if (await dbContext.Users.Where(user => user.Email == userDto.Email).AnyAsync())
+        User? currentUser = await dbContext.Users.Where(User => User.Email == Email).FirstAsync();
+        return currentUser is null ? Results.NotFound() : Results.Ok(new ResponseData<ResponseUserDto>("Success", currentUser.ToResponseDto()));
+    }
+
+    [Authorize]
+    [HttpGet("properties")]
+    public async Task<IResult> GetProperty()
+    {
+        try
         {
-            return Results.Conflict();
+            string token = "" + HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var claim = _tokenService.GetPrincipalFromToken(token).Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            var userClaim = User.FindFirst(claim => claim.Type == ClaimTypes.NameIdentifier);
+            if (userClaim == null) return Results.Unauthorized();
+            var userId = int.Parse(userClaim.Value);
+            Property[]? existingProperty = await dbContext.Properties.Where(property => property.UserId == userId).ToArrayAsync();
+            if (existingProperty is null) return Results.NotFound();
+            return Results.Ok(new ResponseData<ResponsePropertyDto[]>("Success", existingProperty.ToResponseDto()));
         }
-        dbContext.Users.Add(userDto.ToEntity());
-        await dbContext.SaveChangesAsync();
-        User? currentUser = await dbContext.Users.Where(user => user.Email == userDto.Email).FirstAsync();
-        return currentUser is null ? Results.NotFound() : Results.CreatedAtRoute(nameof(GetUserById), new { Id = currentUser.Id }, currentUser.ToResponseDto());
-    }
-
-    [HttpPost("login", Name = nameof(PostLogin))]
-    public async Task<IResult> PostLogin([FromBody] LoginUserDto userDto)
-    {
-        User? currentUser = await dbContext.Users.Where(user => user.Email == userDto.Email && user.VerifyPassword(userDto.Password)).FirstAsync();
-        return currentUser is null ? Results.NotFound() : Results.CreatedAtRoute(nameof(GetUserById), new { Id = currentUser.Id }, currentUser.ToResponseDto());
+        catch (Exception e)
+        {
+            return Results.BadRequest(new ResponseData<object>(e.Message));
+        }
     }
 }

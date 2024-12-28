@@ -1,45 +1,38 @@
 using Land_Property.API.Dtos;
 using Land_Property.API.Entities;
-using Microsoft.AspNetCore.Identity;
+using Land_Property.API.Helper;
 
 namespace Land_Property.API.Mapping;
 
 public static class UserMapping
 {
-    private static readonly PasswordHasher<object> passwordHasher = new();
-
     public static User ToEntity(this RegisterUserDto dto)
     {
         return new User
         {
             Name = dto.Name,
             Email = dto.Email,
-            PasswordHash = dto.Password.HashPassword(),
+            PasswordHash = dto.Password.Hash(),
             PhoneNumber = dto.PhoneNumber,
             Address = dto.Address,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
         };
     }
 
-    public static ResponseUserDto ToResponseDto(this User dto)
+    public static ResponseUserDto ToResponseDto(this User user)
     {
         return new ResponseUserDto
         (
-            dto.Name,
-            dto.Email,
-            dto.PhoneNumber,
-            dto.Address
+            user.Name,
+            user.Email,
+            user.PhoneNumber,
+            user.Address
         );
-    }
-
-    public static string HashPassword(this string password)
-    {
-        return passwordHasher.HashPassword(new(), password);
     }
 
     public static bool VerifyPassword(this User user, string password)
     {
-        return passwordHasher.VerifyHashedPassword(new(), user.PasswordHash, password) == PasswordVerificationResult.Success;
+        return password.VerifyHashed(user.PasswordHash);
     }
 }

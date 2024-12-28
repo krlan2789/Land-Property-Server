@@ -4,6 +4,7 @@ using Land_Property.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Property.API.Migrations
 {
     [DbContext(typeof(PropertyDatabaseContext))]
-    partial class PropertyDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241227203656_AdsTypePropertyTypeSeedData")]
+    partial class AdsTypePropertyTypeSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,13 @@ namespace Land_Property.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -43,19 +49,12 @@ namespace Land_Property.API.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Slug")
+                    b.HasIndex("Code")
                         .IsUnique();
 
                     b.ToTable("AdvertisementTypes");
@@ -64,26 +63,26 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(3174),
+                            Code = "rent",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Rent",
-                            Slug = "rent",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(3437)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4177),
+                            Code = "sell",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sell",
-                            Slug = "sell",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4179)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4181),
+                            Code = "credit",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Credit",
-                            Slug = "credit",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 79, DateTimeKind.Local).AddTicks(4182)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -115,9 +114,7 @@ namespace Land_Property.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -135,20 +132,13 @@ namespace Land_Property.API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(20,0)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -158,9 +148,6 @@ namespace Land_Property.API.Migrations
                     b.HasIndex("AdvertisementTypeId");
 
                     b.HasIndex("BuildingTypeId");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -175,10 +162,13 @@ namespace Land_Property.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -188,19 +178,12 @@ namespace Land_Property.API.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Slug")
+                    b.HasIndex("Code")
                         .IsUnique();
 
                     b.ToTable("PropertyTypes");
@@ -209,42 +192,42 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 77, DateTimeKind.Local).AddTicks(3536),
+                            Code = "house",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "House",
-                            Slug = "house",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(5625)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6337),
+                            Code = "apartment",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Apartment",
-                            Slug = "apartment",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6340)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6341),
+                            Code = "guesthouse",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Guesthouse",
-                            Slug = "guesthouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6342)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6343),
+                            Code = "warehouse",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Warehouse",
-                            Slug = "warehouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6343)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6344),
+                            Code = "commercial",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Commercial",
-                            Slug = "commercial",
-                            UpdatedAt = new DateTime(2024, 12, 28, 12, 50, 12, 78, DateTimeKind.Local).AddTicks(6345)
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -257,9 +240,7 @@ namespace Land_Property.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
@@ -288,9 +269,7 @@ namespace Land_Property.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -313,9 +292,7 @@ namespace Land_Property.API.Migrations
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -337,9 +314,7 @@ namespace Land_Property.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(64)
