@@ -1,65 +1,44 @@
 trigger:
 - main
 
+pool:
+  vmImage: ubuntu-latest
+
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   solution: '**/Land-Property-Server.sln'
   project: '**/Land-Property.API.csproj'
 
-jobs:
-- job: RestorePackages
-  displayName: 'Restore Packages'
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-  - task: NuGetToolInstaller@1
-    displayName: 'Install NuGet'
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet'
 
-  - task: NuGetCommand@2
-    displayName: 'Restore NuGet Packages'
-    inputs:
-      command: 'restore'
-      restoreSolution: '$(solution)'
+- task: NuGetCommand@2
+  displayName: 'Restore NuGet Packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(solution)'
 
-# - job: RunTests
+# - task: DotNetCoreCLI@2
 #   displayName: 'Run Tests'
-#   dependsOn: RestorePackages
-#   pool:
-#     vmImage: ubuntu-latest
-#   steps:
-#   - task: DotNetCoreCLI@2
-#     displayName: 'Run Tests'
-#     inputs:
-#       command: 'test'
-#       projects: '$(solution)'
-#       arguments: '--configuration $(buildConfiguration)'
+#   inputs:
+#     command: 'test'
+#     projects: '$(solution)'
+#     arguments: '--configuration $(buildConfiguration)'
 
-- job: PublishProject
+- task: DotNetCoreCLI@2
   displayName: 'Publish Project'
-  dependsOn: RestorePackages
-  # dependsOn: RunTests
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-  - task: DotNetCoreCLI@2
-    displayName: 'Publish Project'
-    inputs:
-      command: 'publish'
-      publishWebProjects: false
-      projects: '$(project)'
-      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-      zipAfterPublish: false
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(project)'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
 
-- job: PublishArtifacts
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
-  dependsOn: PublishProject
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Build Artifacts'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'Land-Property-Server'
-      publishLocation: 'Container'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Land-Property-Server'
+    publishLocation: 'Container'
