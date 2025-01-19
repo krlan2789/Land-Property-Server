@@ -24,18 +24,28 @@ namespace Land_Property.API.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet("paginate/{Page?}/{Count?}")]
+        public async Task<IResult> GetPropertyPaginate(int Page = 1, int Count = 8)
+        {
+            int defaultCount = dbContext.Properties.Count();
+            if (Count < 1 || Count > defaultCount) return Results.BadRequest();
+            var existingProperty = await dbContext.Properties.Skip((Page - 1) * Count).Take(Count).ToListAsync();
+            if (existingProperty is null) return Results.NotFound();
+            return Results.Ok(new ResponseDataArray<ResponsePropertyDto>("Success", existingProperty.ToArray().ToResponseDto()));
+        }
+
         [HttpGet("{Slug}")]
-        public async Task<IResult> GetProperty(string Slug)
+        public async Task<IResult> GetPropertyBySlug(string Slug)
         {
             Property? existingProperty = await dbContext.Properties.Where(property => property.Slug == Slug).FirstOrDefaultAsync();
             if (existingProperty is null) return Results.NotFound();
             return Results.Ok(new ResponseData<ResponsePropertyDto>("Success", existingProperty.ToResponseDto()));
         }
 
-        [HttpGet("search")]
-        public async Task<IResult> SearchProperty(string keyword)
+        [HttpGet("search/{Keyword?}")]
+        public async Task<IResult> SearchProperty(string? Keyword)
         {
-            Property[]? existingProperty = await dbContext.Properties.Where(property => property.ContainsKeyword(keyword)).ToArrayAsync();
+            Property[]? existingProperty = await dbContext.Properties.Where(property => Keyword == null || property.ContainsKeyword(Keyword)).ToArrayAsync();
             if (existingProperty is null) return Results.NotFound();
             return Results.Ok(new ResponseData<ResponsePropertyDto[]>("Success", existingProperty.ToResponseDto()));
         }

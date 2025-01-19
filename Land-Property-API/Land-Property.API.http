@@ -60,6 +60,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwianRpI
 GET {{ Land_Property_API_HostAddress }}/property/search
 Accept: application/json
 
+### Get some properties or all by passed count
+GET {{ Land_Property_API_HostAddress }}/property/paginate/1/2
+Accept: application/json
+
 ### Get property by id
 GET {{ Land_Property_API_HostAddress }}/property/{{ PropertySlug }}
 Accept: application/json

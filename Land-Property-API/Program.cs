@@ -45,19 +45,19 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
         };
     });
-builder.Services
-    .AddCors(options =>
-    {
-        options.AddPolicy("AllowSpecificOrigins", builder =>
-        {
-            builder
-                .WithOrigins("http://localhost")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .WithHeaders("Content-Type", "Authorization");
-        });
-    });
+// builder.Services
+//     .AddCors(options =>
+//     {
+//         options.AddPolicy("AllowSpecificOrigins", builder =>
+//         {
+//             builder
+//                 .WithOrigins("http://localhost")
+//                 .AllowAnyMethod()
+//                 .AllowAnyHeader()
+//                 .SetIsOriginAllowed(origin => true)
+//                 .WithHeaders("Content-Type", "Authorization");
+//         });
+//     });
 builder.Services.AddSingleton(new TokenService(secretKey, tokenIssuer, tokenAudience));
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
@@ -72,7 +72,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 // app.UseMiddleware<AntiForgeryMiddleware>();
-app.UseCors("AllowSpecificOrigins");
+// app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
