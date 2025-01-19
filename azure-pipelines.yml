@@ -50,6 +50,6 @@ steps:
   name: 'PublishBuildArtifacts'
   displayName: 'Publish Build Artifacts'
   inputs:
-    PathtoPublish: '--output $(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'Lan-Property-Server'
     publishLocation: 'Container'
