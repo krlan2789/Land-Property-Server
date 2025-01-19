@@ -1,13 +1,5 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
-
-pool:
-  vmImage: ubuntu-latest
 
 variables:
   buildPlatform: 'Any CPU'
@@ -15,41 +7,59 @@ variables:
   solution: '**/Land-Property-Server.sln'
   project: '**/Land-Property.API.csproj'
 
-steps:
-- task: NuGetToolInstaller@1
-  name: 'NuGetToolInstaller'
-  displayName: 'NuGet Tool Installer'
+jobs:
+- job: RestorePackages
+  displayName: 'Restore Packages'
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Install NuGet'
 
-- task: NuGetCommand@2
-  name: 'NuGetRestore'
-  displayName: 'NuGet Restore Package'
-  inputs:
-    command: 'restore'
-    restoreSolution: '$(solution)'
-    feedsToUse: 'select'
+  - task: NuGetCommand@2
+    displayName: 'Restore NuGet Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '$(solution)'
 
-# - task: DotNetCoreCLI@2
-#   name: 'Tests'
+# - job: RunTests
 #   displayName: 'Run Tests'
-#   inputs:
-#     command: 'test'
-#     projects: '$(solution)'
-#     arguments: '--configuration $(buildConfiguration)'
+#   dependsOn: RestorePackages
+#   pool:
+#     vmImage: ubuntu-latest
+#   steps:
+#   - task: DotNetCoreCLI@2
+#     displayName: 'Run Tests'
+#     inputs:
+#       command: 'test'
+#       projects: '$(solution)'
+#       arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  name: 'Publish'
+- job: PublishProject
   displayName: 'Publish Project'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '$(project)'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: false
+  dependsOn: RestorePackages
+  # dependsOn: RunTests
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Project'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '$(project)'
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: false
 
-- task: PublishBuildArtifacts@1
-  name: 'PublishBuildArtifacts'
+- job: PublishArtifacts
   displayName: 'Publish Build Artifacts'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Lan-Property-Server'
-    publishLocation: 'Container'
+  dependsOn: PublishProject
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'Land-Property-Server'
+      publishLocation: 'Container'
