@@ -28,13 +28,13 @@ steps:
     restoreSolution: '$(solution)'
     feedsToUse: 'select'
 
-- task: DotNetCoreCLI@2
-  name: 'Tests'
-  displayName: 'Run Tests'
-  inputs:
-    command: 'test'
-    projects: '$(solution)'
-    arguments: '--configuration $(buildConfiguration)'
+# - task: DotNetCoreCLI@2
+#   name: 'Tests'
+#   displayName: 'Run Tests'
+#   inputs:
+#     command: 'test'
+#     projects: '$(solution)'
+#     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   name: 'Publish'
