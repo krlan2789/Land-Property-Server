@@ -8,7 +8,7 @@ public static class DatabaseSeeder
     public static async Task Seed(IServiceProvider serviceProvider)
     {
         using var context = new PropertyDatabaseContext(serviceProvider.GetRequiredService<DbContextOptions<PropertyDatabaseContext>>());
-        if (context.Database.GetPendingMigrations().Count() > 0)
+        if (context.Database.GetPendingMigrations().Any())
         {
             context.Database.EnsureDeleted();
             await context.Database.MigrateAsync();
