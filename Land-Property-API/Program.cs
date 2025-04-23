@@ -77,13 +77,16 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+var staticFilePath = "" + builder.Configuration["StaticFilePath"];
+if (!Directory.Exists(staticFilePath)) Directory.CreateDirectory(staticFilePath);
+
 // Configure the HTTP request pipeline.
 // app.UseMiddleware<AntiForgeryMiddleware>();
 // app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles(new StaticFileOptions
 {
-    RequestPath = "" + builder.Configuration["StaticFilePath"],
+    RequestPath = staticFilePath,
 });
 app.UseRouting();
 app.UseAuthentication();
