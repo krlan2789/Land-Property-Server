@@ -18,15 +18,15 @@ var builder = WebApplication.CreateBuilder(args);
 //         option.UseSqlServer("" + builder.Configuration.GetConnectionString("DefaultConnection"));
 //     });
 
-var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty_Prod") ?? builder.Configuration.GetConnectionString("LandProperty_Prod");
-if (builder.Environment.IsDevelopment()) connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
-builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
-
 // Add configuration to the container
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
+
+var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty_Prod") ?? builder.Configuration.GetConnectionString("LandProperty_Prod");
+if (builder.Environment.IsDevelopment()) connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
+builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
 
 // Add services to the container.
 string tokenIssuer = "" + builder.Configuration["Jwt:Issuer"];
