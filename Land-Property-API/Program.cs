@@ -24,8 +24,8 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty_Prod") ?? builder.Configuration.GetConnectionString("LandProperty_Prod");
-if (builder.Environment.IsDevelopment()) connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
+var connString = builder.Configuration.GetConnectionString("LandProperty_Prod");
+if (builder.Environment.IsDevelopment()) connString = builder.Configuration.GetConnectionString("LandProperty");
 builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
 
 // Add services to the container.
