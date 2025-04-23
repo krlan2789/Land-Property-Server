@@ -81,7 +81,10 @@ var app = builder.Build();
 // app.UseMiddleware<AntiForgeryMiddleware>();
 // app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    RequestPath = "" + builder.Configuration["StaticFilePath"],
+});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
