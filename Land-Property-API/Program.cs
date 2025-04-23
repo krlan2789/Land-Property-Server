@@ -18,7 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 //         option.UseSqlServer("" + builder.Configuration.GetConnectionString("DefaultConnection"));
 //     });
 
-var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
+var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty_Prod") ?? builder.Configuration.GetConnectionString("LandProperty_Prod");
+if (builder.Environment.IsDevelopment()) connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
 builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
 
 // Add configuration to the container
