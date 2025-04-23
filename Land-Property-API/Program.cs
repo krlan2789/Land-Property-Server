@@ -26,6 +26,7 @@ builder.Configuration
 
 var connString = builder.Configuration.GetConnectionString("LandProperty_Prod");
 if (builder.Environment.IsDevelopment()) connString = builder.Configuration.GetConnectionString("LandProperty");
+Console.WriteLine("SQLite file directory: " + connString);
 builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
 
 // Add services to the container.
