@@ -1,0 +1,43 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Setup .NET Core
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore Land-Property-Server.sln
+
+    # Build the project
+    - name: Build the project
+      run: dotnet build --configuration Release Land-Property-Server.sln
+
+    # Publish the project
+    - name: Publish the project
+      run: dotnet publish Land-Property-API/Land-Property.API.csproj --configuration Release --output ./publish
+
+    # Deploy to Azure App Service
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'land-property' # Replace with your Azure App Service name
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish
