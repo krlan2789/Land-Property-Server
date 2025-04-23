@@ -35,7 +35,7 @@ jobs:
 
     # Copy the database file to the publish directory
     - name: Publish Database
-      run: cp LandProperty.db ./publish
+      run: cp Land-Property-API/LandProperty.db ./publish
 
     # Deploy to Azure App Service
     - name: Deploy to Azure Web App
