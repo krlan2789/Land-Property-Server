@@ -106,11 +106,11 @@ app.MapScalarApiReference(options =>
         .WithTitle("Land Property - REST API");
 });
 
-if (app.Environment.IsDevelopment())
-{
-    using var scope = app.Services.CreateScope();
-    var services = scope.ServiceProvider;
-    await DatabaseSeeder.Seed(services);
-}
+// if (app.Environment.IsDevelopment())
+// {
+// }
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+await DatabaseSeeder.Seed(services);
 
 app.Run();
