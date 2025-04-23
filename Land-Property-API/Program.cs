@@ -1,5 +1,7 @@
 using System.Text;
 using Land_Property.API.Data;
+using Land_Property.API.Seeders;
+
 // using Land_Property.API.Middleware;
 using Land_Property.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -98,9 +100,9 @@ app.MapScalarApiReference(options =>
 
 if (app.Environment.IsDevelopment())
 {
-    // Migrate the database
-    await app.MigrateDbAsync();
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    await DatabaseSeeder.Seed(services);
 }
-
 
 app.Run();
