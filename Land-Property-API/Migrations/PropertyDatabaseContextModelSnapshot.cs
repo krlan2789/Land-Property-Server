@@ -3,7 +3,6 @@ using System;
 using Land_Property.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -16,41 +15,35 @@ namespace Land_Property.API.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("Land_Property.API.Entities.AdvertisementType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
@@ -64,26 +57,26 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(7410),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 80, DateTimeKind.Local).AddTicks(9748),
                             Name = "Rent",
                             Slug = "rent",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(7632)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 81, DateTimeKind.Local).AddTicks(24)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8160),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 81, DateTimeKind.Local).AddTicks(640),
                             Name = "Sell",
                             Slug = "sell",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8161)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 81, DateTimeKind.Local).AddTicks(642)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8162),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 81, DateTimeKind.Local).AddTicks(643),
                             Name = "Credit",
                             Slug = "credit",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 335, DateTimeKind.Local).AddTicks(8163)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 81, DateTimeKind.Local).AddTicks(644)
                         });
                 });
 
@@ -91,67 +84,65 @@ namespace Land_Property.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AdvertisementTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<byte>("Bathroom")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<byte>("Bedroom")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("BuildingArea")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
                     b.Property<int>("BuildingTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<byte>("Floor")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("INTEGER");
 
                     b.PrimitiveCollection<string>("Images")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LandArea")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(20,0)");
+                    b.Property<ulong>("Price")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -171,31 +162,29 @@ namespace Land_Property.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
@@ -209,42 +198,42 @@ namespace Land_Property.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 333, DateTimeKind.Local).AddTicks(8052),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 78, DateTimeKind.Local).AddTicks(5547),
                             Name = "House",
                             Slug = "house",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9048)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(7894)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9692),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8896),
                             Name = "Apartment",
                             Slug = "apartment",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9693)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8899)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9696),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8900),
                             Name = "Guesthouse",
                             Slug = "guesthouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9696)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8901)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9698),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8902),
                             Name = "Warehouse",
                             Slug = "warehouse",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9698)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8903)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9699),
+                            CreatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8904),
                             Name = "Commercial",
                             Slug = "commercial",
-                            UpdatedAt = new DateTime(2024, 12, 28, 19, 5, 4, 334, DateTimeKind.Local).AddTicks(9700)
+                            UpdatedAt = new DateTime(2025, 4, 23, 17, 31, 19, 79, DateTimeKind.Local).AddTicks(8905)
                         });
                 });
 
@@ -252,20 +241,18 @@ namespace Land_Property.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<int>("PropertyId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -280,41 +267,39 @@ namespace Land_Property.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
@@ -329,27 +314,25 @@ namespace Land_Property.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserAgent")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

@@ -10,11 +10,14 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Database Context services to the container
-builder.Services
-    .AddDbContext<PropertyDatabaseContext>(option =>
-    {
-        option.UseSqlServer("" + builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
+// builder.Services
+//     .AddDbContext<PropertyDatabaseContext>(option =>
+//     {
+//         option.UseSqlServer("" + builder.Configuration.GetConnectionString("DefaultConnection"));
+//     });
+
+var connString = Environment.GetEnvironmentVariable("ConnectionStrings__LandProperty") ?? builder.Configuration.GetConnectionString("LandProperty");
+builder.Services.AddSqlite<PropertyDatabaseContext>(connString);
 
 // Add configuration to the container
 builder.Configuration
@@ -80,23 +83,24 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Migrate the database
+// Register the endpoint for viewing the OpenAPI Documentation
+string openApiRoute = "/api/docs/{documentName}/openapi.json";
+app.MapOpenApi(openApiRoute);
+app.MapScalarApiReference(options =>
+{
+    string scalarApiRoute = "/api/docs/{documentName}";
+    options
+        .WithTheme(ScalarTheme.BluePlanet)
+        .WithEndpointPrefix(scalarApiRoute)
+        .WithOpenApiRoutePattern(openApiRoute)
+        .WithTitle("Land Property - REST API");
+});
+
 if (app.Environment.IsDevelopment())
 {
-    // Register the endpoint for viewing the OpenAPI Documentation
-    string openApiRoute = "/api/docs/{documentName}/openapi.json";
-    app.MapOpenApi(openApiRoute);
-    app.MapScalarApiReference(options =>
-    {
-        string scalarApiRoute = "/api/docs/{documentName}";
-        options
-            .WithTheme(ScalarTheme.BluePlanet)
-            .WithEndpointPrefix(scalarApiRoute)
-            .WithOpenApiRoutePattern(openApiRoute)
-            .WithTitle("Land Property - REST API");
-    });
-
+    // Migrate the database
     await app.MigrateDbAsync();
 }
+
 
 app.Run();
