@@ -33,6 +33,10 @@ jobs:
     - name: Publish the project
       run: dotnet publish Land-Property-API/Land-Property.API.csproj --configuration Release --output ./publish
 
+    # Copy the database file to the publish directory
+    - name: Publish Database
+      run: cp LandProperty.db ./publish
+
     # Deploy to Azure App Service
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
